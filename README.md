@@ -2,7 +2,8 @@
 
 Application Architecture
 
-<img width="1178" alt="Screenshot 2023-09-25 at 5 29 57 PM" src="https://github.com/srmoola/Privy-SMS-Application/assets/116038307/fcd71b4f-01ba-46d1-9208-97c1ba57c22c">
+<img width="1178" alt="Screenshot 2023-09-25 at 5 29 57 PM" src="https://github.com/srmoola/Privy-Internship-SMS-Application/assets/116038307/4e206607-e141-46b3-9349-d1b9fd354b4a">
+
 
 ## Deliverables
 
