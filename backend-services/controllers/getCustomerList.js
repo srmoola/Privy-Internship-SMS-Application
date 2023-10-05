@@ -1,20 +1,32 @@
 "use strict";
-const { response } = require("express");
-// Remember to destructure using the model name found in the model file
 const { Customer } = require("../models");
 
-// Get the information from the routes, and parse it
 const getCustomerByEmail = async (req, res) => {
+  if (typeof req.body.user_id != "number") {
+    res.send({ ERROR: 300, DETAIL: "Please send a number" });
+    return;
+  }
+
   Customer.findAll({
     where: {
-      userEmail: req.body.userEmail,
+      user_id: req.body.user_id,
     },
-  }).then((response) => {
-    console.log(response);
-    res.send(response);
-  });
+  })
+    .then((response) => {
+      // check if no customers found
+      if (response.length === 0) {
+        res.send({
+          RESPONSE: 300,
+          DETAIL: "No Customers under this user were found!",
+        });
+        return;
+      }
 
-  //   res.send("Hello World");
+      res.send(response);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
 };
 
 module.exports = getCustomerByEmail;
