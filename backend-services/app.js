@@ -2,6 +2,13 @@ const express = require("express");
 
 const app = express();
 app.use(express.json());
+var cors = require("cors");
+var corsOptions = {
+  origin: "http://localhost:5173",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+};
+app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 const PORT = 3000;
 
 const testRoute = require("./routes/test");
@@ -10,6 +17,7 @@ const createCustomerRoute = require("./routes/customers");
 const createTextMessageRoute = require("./routes/textMessage");
 const createProdUserRoute = require("./routes/prodUsers");
 const getCustomerListRoute = require("./routes/getCustomerList");
+const checkUserRoute = require("./routes/checkUser");
 
 app.get("/", (req, res) =>
   res.send(
@@ -24,6 +32,7 @@ app.use("/create-text-message", createTextMessageRoute);
 app.use("/create-customer", createCustomerRoute);
 app.use("/create-prod-user", createProdUserRoute);
 app.use("/get-customer-list", getCustomerListRoute);
+app.use("/check-user", checkUserRoute);
 
 app.listen(PORT, (error) => {
   if (!error) console.log("http://localhost:" + PORT);

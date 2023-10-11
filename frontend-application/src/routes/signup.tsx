@@ -10,18 +10,69 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Controls, Player } from "@lottiefiles/react-lottie-player";
 import Copyright from "../components/Copyright";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    const email = String(data.get("email"))!;
+    const phone = String(data.get("phone"))!;
+
+    if (
+      !email
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+    ) {
+      alert("Invalid email!");
+      return;
+    }
+
+    if (phone.length != 10) {
+      alert("Invalid Phone Number!");
+      return;
+    }
     console.log({
       email: data.get("email"),
       password: data.get("password"),
+      firstName: data.get("firstname"),
+      lastName: data.get("lastname"),
+      phone: data.get("phone"),
     });
+
+    const response = axios({
+      method: "post",
+      url: "http://localhost:3000/create-prod-user",
+      data: {
+        email: email,
+        password: data.get("password"),
+        firstName: data.get("firstname"),
+        lastName: data.get("lastname"),
+        phoneNumber: phone,
+      },
+    });
+
+    response
+      .then((res) => {
+        if (res.data.Response === 400) {
+          alert(res.data.Detail);
+          return;
+        }
+        console.log(res.data);
+        localStorage.setItem("USER_ID", res.data.USER_ID);
+        navigate("/app");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -31,7 +82,7 @@ export default function SignUp() {
 
         <Box
           sx={{
-            marginTop: "25%",
+            marginTop: "15%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -43,10 +94,40 @@ export default function SignUp() {
           </Typography>
           <Box
             component="form"
+            id="myForm"
             onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
+            <TextField
+              margin="normal"
+              required
+              id="firstname"
+              label="First Name"
+              name="firstname"
+              autoComplete="given-name"
+              autoFocus
+            />
+            <TextField
+              sx={{ ml: 0.5 }}
+              margin="normal"
+              required
+              id="lastname"
+              label="Last Name"
+              name="lastname"
+              autoComplete="family-name"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="phone"
+              label="Phone Number"
+              name="phone"
+              autoComplete="tel-local"
+              autoFocus
+            />
             <TextField
               margin="normal"
               required
@@ -65,7 +146,7 @@ export default function SignUp() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
             />
 
             <Button

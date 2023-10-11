@@ -4,8 +4,12 @@ const { Users } = require("../models");
 
 // Get the information from the routes, and parse it
 const createProdUser = async (req, res) => {
-  if (req.body.length != 4) {
-    res.send({ ERROR: 300, DETAIL: "Information Missing!" });
+  const validate = await Users.findOne({
+    where: { email: req.body.email },
+  });
+
+  if (validate) {
+    res.send({ Response: 400, Detail: "Email already taken!" });
     return;
   }
 
@@ -15,15 +19,21 @@ const createProdUser = async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
+      password: req.body.password,
     });
   } catch (error) {
     res.send(error);
     return;
   }
 
+  const id = await Users.findAll({
+    where: { email: req.body.email },
+  });
+
   res.send({
     RESPONSE: 200,
     DETAIL: "Customer has been successfully created!",
+    USER_ID: id[0].dataValues.id,
   });
 };
 
