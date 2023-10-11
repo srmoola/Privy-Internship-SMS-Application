@@ -8,13 +8,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Controls, Player } from "@lottiefiles/react-lottie-player";
 import Copyright from "../components/Copyright";
+import SignInLottie from "../components/SignInLottie";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Root() {
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -22,6 +25,27 @@ export default function Root() {
       email: data.get("email"),
       password: data.get("password"),
     });
+
+    const response = axios({
+      method: "post",
+      url: "http://localhost:3000/check-user",
+      data: {
+        email: data.get("email"),
+        password: data.get("password"),
+      },
+    });
+
+    response
+      .then((res) => {
+        if (res.data.Response === 400) {
+          alert("Incorrect Username or Password");
+        }
+        console.log(res);
+        navigate("/app");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -87,52 +111,7 @@ export default function Root() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-      <Box
-        sx={{
-          zIndex: 10,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "35%",
-          height: "100%",
-          //   backgroundColor: "black",
-        }}
-      >
-        <Player
-          autoplay
-          loop
-          src="/leftperson.json"
-          style={{ height: "100%", width: "100%", marginTop: "75%" }}
-        >
-          <Controls
-            visible={false}
-            buttons={["play", "repeat", "frame", "debug"]}
-          />
-        </Player>
-      </Box>
-      <Box
-        sx={{
-          zIndex: 10,
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: "35%",
-          height: "100%",
-          //   backgroundColor: "black",
-        }}
-      >
-        <Player
-          autoplay
-          loop
-          src="/cornerlottie.json"
-          style={{ height: "100%", width: "100%", marginTop: "65%" }}
-        >
-          <Controls
-            visible={false}
-            buttons={["play", "repeat", "frame", "debug"]}
-          />
-        </Player>
-      </Box>
+      <SignInLottie />
     </ThemeProvider>
   );
 }
