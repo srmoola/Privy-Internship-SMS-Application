@@ -11,7 +11,15 @@ const checkUser = async (req, res) => {
   if (validate === null) {
     res.send({ Response: 400, Detail: "User Not Found!" });
   } else {
-    res.send({ Response: 200, Detail: "User Found!" });
+    const id = await Users.findAll({
+      where: { email: req.body.email },
+    });
+
+    res.send({
+      RESPONSE: 200,
+      DETAIL: "Customer has been successfully created!",
+      USER_ID: id[0].dataValues.id,
+    });
   }
 };
 
