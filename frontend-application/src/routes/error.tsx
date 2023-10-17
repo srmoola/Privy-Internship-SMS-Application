@@ -38,7 +38,7 @@ const Error = () => {
         }}
         fullWidth
       >
-        Oops! Page not found! Go back to homepage!
+        Page Not Found or Not Logged in! Click here to go back to Sign-In Page
       </Button>
     </div>
   );
