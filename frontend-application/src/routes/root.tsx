@@ -38,9 +38,12 @@ export default function Root() {
     response
       .then((res) => {
         if (res.data.Response === 400) {
-          alert("Incorrect Username or Password");
+          alert("Incorrect Email or Password");
+          return;
         }
-        console.log(res);
+
+        console.log(res.data);
+        localStorage.setItem("USER_ID", res.data.USER_ID);
         navigate("/app");
       })
       .catch((err) => {
