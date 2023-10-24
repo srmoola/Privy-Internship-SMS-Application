@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../components/Dashboard";
 import axios from "axios";
+import { Grid, Link, Paper, TableCell, TableRow } from "@mui/material";
+import Customers from "../components/Customers";
+import Deposits from "../components/Updates";
 
 const MainPage = () => {
   const [userInfo, setuserInfo] = useState<any>(null);
@@ -32,10 +35,47 @@ const MainPage = () => {
 
     fetchData();
   }, []);
-
-  console.log(userInfo);
-
-  return <Dashboard username={!userInfo ? "User" : userInfo.firstName} />;
+  return (
+    <Dashboard>
+      {/* Chart */}
+      <Grid item xs={12} md={8} lg={9}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: 240,
+          }}
+        >
+          <Deposits username={!userInfo ? "User" : userInfo.firstName} />
+        </Paper>
+      </Grid>
+      {/* Recent Deposits */}
+      <Grid item xs={12} md={4} lg={3}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: 240,
+          }}
+        >
+          <Deposits username={!userInfo ? "User" : userInfo.firstName} />
+        </Paper>
+      </Grid>
+      {/* customers */}
+      <Grid item xs={12}>
+        <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+          <Customers />
+          <TableRow>
+            <TableCell>
+              <Link href="/customers">Go to All Customers Page</Link>
+            </TableCell>
+          </TableRow>
+        </Paper>
+      </Grid>
+    </Dashboard>
+  );
 };
 
 export default MainPage;
