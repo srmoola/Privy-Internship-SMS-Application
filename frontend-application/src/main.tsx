@@ -6,6 +6,7 @@ import Root from "./routes/root";
 import Error from "./routes/error";
 import SignUp from "./routes/signup";
 import MainPage from "./routes/mainpage";
+import AllCustomers from "./components/AllCustomers";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "app",
     element: <MainPage />,
+  },
+  {
+    path: "customers",
+    element: <AllCustomers />,
   },
 ]);
 
