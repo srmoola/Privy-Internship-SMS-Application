@@ -1,6 +1,7 @@
 const express = require("express");
 
 const app = express();
+require("dotenv").config();
 app.use(express.json());
 var cors = require("cors");
 var corsOptions = {
@@ -18,6 +19,7 @@ const createTextMessageRoute = require("./routes/textMessage");
 const createProdUserRoute = require("./routes/prodUsers");
 const getCustomerListRoute = require("./routes/getCustomerList");
 const checkUserRoute = require("./routes/checkUser");
+const sendMessageRoute = require("./routes/sendMessage");
 
 app.get("/", (req, res) =>
   res.send(
@@ -33,6 +35,7 @@ app.use("/create-customer", createCustomerRoute);
 app.use("/create-prod-user", createProdUserRoute);
 app.use("/get-customer-list", getCustomerListRoute);
 app.use("/check-user", checkUserRoute);
+app.use("/send-message", sendMessageRoute);
 
 app.listen(PORT, (error) => {
   if (!error) console.log("http://localhost:" + PORT);

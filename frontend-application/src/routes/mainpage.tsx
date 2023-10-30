@@ -4,7 +4,7 @@ import Dashboard from "../components/Dashboard";
 import axios from "axios";
 import { Grid, Link, Paper, TableCell, TableRow } from "@mui/material";
 import Customers from "../components/Customers";
-import Deposits from "../components/Updates";
+import Updates from "../components/Updates";
 
 const MainPage = () => {
   const [userInfo, setuserInfo] = useState<any>(null);
@@ -38,7 +38,7 @@ const MainPage = () => {
   return (
     <Dashboard>
       {/* Chart */}
-      <Grid item xs={12} md={8} lg={9}>
+      <Grid item xs={12}>
         <Paper
           sx={{
             p: 2,
@@ -47,23 +47,9 @@ const MainPage = () => {
             height: 240,
           }}
         >
-          <Deposits username={!userInfo ? "User" : userInfo.firstName} />
+          <Updates username={!userInfo ? "User" : userInfo.firstName} />
         </Paper>
       </Grid>
-      {/* Recent Deposits */}
-      <Grid item xs={12} md={4} lg={3}>
-        <Paper
-          sx={{
-            p: 2,
-            display: "flex",
-            flexDirection: "column",
-            height: 240,
-          }}
-        >
-          <Deposits username={!userInfo ? "User" : userInfo.firstName} />
-        </Paper>
-      </Grid>
-      {/* customers */}
       <Grid item xs={12}>
         <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <Customers />

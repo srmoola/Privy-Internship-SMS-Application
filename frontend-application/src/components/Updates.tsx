@@ -3,10 +3,6 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Title from "./Title";
 
-function preventDefault(event: React.MouseEvent) {
-  event.preventDefault();
-}
-
 type Props = {
   username: string;
 };
@@ -32,7 +28,7 @@ export default function Deposits({ username }: Props) {
         on {formatDate(today)}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
+        <Link color="primary" href="http://localhost:5173/customers">
           Send Messages
         </Link>
       </div>

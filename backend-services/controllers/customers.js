@@ -19,12 +19,15 @@ const validatePhoneNumber = (phone) => {
 // Get the information from the routes, and parse it
 const createCustomer = async (req, res) => {
   if (!validateEmail(req.body.email)) {
-    res.send({ Response: 200, Detail: "Invalid Email" });
+    res.send({ Response: 300, Detail: "Invalid Email" });
     return;
   }
 
   if (!validatePhoneNumber(req.body.phoneNumber)) {
-    res.send({ Response: 200, Detail: "Invalid Phone Number" });
+    res.send({
+      Response: 300,
+      Detail: "Invalid Phone Number, maybe separate with " - "",
+    });
     return;
   }
 
