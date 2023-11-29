@@ -24,5 +24,3 @@ Application Architecture
 	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png" alt="TypeScript" title="TypeScript"/></code>&nbsp;
 </div>
 
-ReactJS &nbsp; Node.js &nbsp; Express &nbsp; Postgres &nbsp; Tailwind &nbsp; MUI
-
